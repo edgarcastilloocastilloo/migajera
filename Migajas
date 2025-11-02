@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>para la más migajera de ecuador</title>
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  background: radial-gradient(circle at bottom, #120025, #000);
+  overflow: hidden;
+}
+
+/* Fondo galaxia animado */
+.stars {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url('https://cdn.pixabay.com/photo/2013/07/18/20/26/space-165407_1280.jpg') no-repeat center center/cover;
+  animation: pulse 6s ease-in-out infinite alternate;
+  z-index: -1;
+}
+
+@keyframes pulse {
+  from { filter: brightness(0.8); }
+  to { filter: brightness(1.2); }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 1.8rem;
+  color: #ff8af0;
+  text-shadow: 0 0 15px #ff66c4;
+  margin-bottom: 15px;
+  animation: fadeIn 2s ease;
+}
+
+p {
+  font-size: 1rem;
+  max-width: 600px;
+  line-height: 1.6;
+  animation: fadeIn 3s ease;
+}
+
+.cat {
+  font-size: 3rem;
+  margin-top: 10px;
+  animation: float 3s ease-in-out infinite;
+}
+
+.cat-name {
+  font-size: 1rem;
+  color: #ffc2f9;
+  margin-top: -8px;
+  letter-spacing: 1px;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.stars::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: repeating-radial-gradient(circle, transparent, transparent 2px, rgba(255,255,255,0.2) 3px, transparent 4px);
+  animation: twinkle 3s infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+.btn {
+  background: #ff66c4;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 30px;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #ff66c4;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<div class="container">
+<h1>para la más migajera de ecuador 💫</h1>
+<p>
+hey Dayanna, hola...<br><br>
+espero que hayas tenido un bonito cumpleaños, que lo hayas disfrutado y claro, pasado bien.<br><br>
+prometí darte una cuenta de Spotify como regalo... y pues, lo prometido es deuda.<br><br>
+no quería solo enviarte la cuenta de Spotify de una manera normal, en mensaje y ya, así que lo quise hacer de esta forma para que por lo menos destaque jajaja...<br><br>
+no importa la distancia: este detallito viaja por internet, no por paquetería.<br><br>
+promesa cumplida, espero que lo disfrutes.<br><br>
+cuidese, migajerota, tk y no se le olvide tomar agüita 🐈‍⬛<br><br>
+gracias x existir 🐥
+</p>
+<div class="cat">🐱</div>
+<div class="cat-name">Renata</div>
+<button class="btn" onclick="openGift()">ver regalo 🎁</button>
+</div>
+
+<script>
+function popSound() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.type = 'sine';
+    o.frequency.value = 700;
+    g.gain.value = 0.0001;
+    o.connect(g);
+    g.connect(ctx.destination);
+    const now = ctx.currentTime;
+    g.gain.setValueAtTime(0.0001, now);
+    g.gain.exponentialRampToValueAtTime(0.02, now + 0.005);
+    o.start(now);
+    g.gain.exponentialRampToValueAtTime(0.00001, now + 0.09);
+    o.stop(now + 0.095);
+  } catch(e) { }
+}
+
+function openGift() {
+  popSound();
+  alert("🎶 Tu regalo: Spotify Premium\nCorreo: migajasymasmigajas@gmail.com\nContraseña: 123migajasacomer");
+}
+</script>
+</body>
+</html>
