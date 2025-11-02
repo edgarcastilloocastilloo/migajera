@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Para la más migajera de Ecuador 💫</title>
+<style>
+  :root{--neon:#ff4db8;--neon2:#ff77d1;--muted:#4b3a2b;--card:#fffefc}
+  *{box-sizing:border-box;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial}
+  html,body{height:100%;margin:0;background:#0b0f1a}
+  body{display:flex;align-items:center;justify-content:center;padding:16px;color:#222}
+  .stage{width:100%;max-width:920px;border-radius:18px;overflow:hidden;position:relative}
+  .bg{position:absolute;inset:0;background:linear-gradient(135deg,#cbb2ff,#9be7ff,#ffd1f0);filter:contrast(1.03)}
+  .stars{position:absolute;inset:0;pointer-events:none}
+  .star{position:absolute;width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,0.9);box-shadow:0 0 8px rgba(255,255,255,0.9);animation:drift 12s linear infinite}
+  @keyframes drift{0%{transform:translateY(0) translateX(0)}50%{transform:translateY(-30px) translateX(20px)}100%{transform:translateY(0) translateX(-10px)}}
+  .overlay{position:absolute;inset:0;background:radial-gradient(circle at 20% 20%, rgba(255,255,255,0.04), transparent 10%), radial-gradient(circle at 80% 80%, rgba(255,255,255,0.03), transparent 10%);pointer-events:none}
+  .glass{position:relative;background:linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.88));border-radius:18px;padding:18px;box-shadow:0 12px 40px rgba(10,12,20,0.25);min-height:560px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
+  header{width:100%;display:flex;align-items:center;gap:12px;margin-bottom:8px}
+  .logo{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--neon),var(--neon2));display:flex;align-items:center;justify-content:center;color:white;font-weight:900}
+  h1{margin:0;font-size:18px;text-transform:lowercase;color:#241919}
+  .subtitle{font-size:13px;color:var(--muted);margin-left:6px}
+  .screen{width:100%;display:flex;flex-direction:column;align-items:center;gap:14px;padding:6px}
+  .cat-wrap{width:240px;height:240px;border-radius:18px;background:linear-gradient(180deg,#fffdf9,#fff4ee);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(0,0,0,0.06)}
+  .cat-svg{width:180px;height:180px}
+  .btn{background:linear-gradient(90deg,var(--neon),var(--neon2));color:white;padding:12px 20px;border-radius:999px;border:none;font-weight:800;cursor:pointer;box-shadow:0 10px 30px rgba(255,77,184,0.15);display:inline-flex;align-items:center;gap:10px}
+  .ghost{background:transparent;border:1px solid rgba(0,0,0,0.06);padding:10px 14px;border-radius:10px;cursor:pointer;color:var(--muted)}
+  .card{width:100%;max-width:720px;background:var(--card);color:#222;border-radius:14px;padding:18px;margin-top:6px;box-shadow:0 8px 30px rgba(2,6,23,0.04)}
+  .letter{white-space:pre-wrap;line-height:1.5;font-size:15px;color:#222}
+  .controls{display:flex;gap:10px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+  .creds{display:grid;grid-template-columns:1fr auto;gap:12px;margin-top:12px;align-items:center}
+  .field{padding:12px;border-radius:10px;background:rgba(0,0,0,0.04);font-weight:700;color:#222}
+  .final{margin-top:10px;text-align:center;color:var(--muted);font-size:15px;opacity:0;transition:opacity .8s ease}
+  .final.show{opacity:1}
+  .typing { border-right: .12em solid rgba(0,0,0,0.6); animation: caret 1s steps(1) infinite; }
+  @keyframes caret {50% { border-color: transparent; } }
+  @media (max-width:560px){ .cat-wrap{width:160px;height:160px} .cat-svg{width:120px;height:120px} .glass{min-height:640px;padding:12px} }
+</style>
+</head>
+<body>
+  <div class="stage" role="main" aria-live="polite">
+    <div class="bg" aria-hidden="true"></div>
+    <div class="stars" aria-hidden="true" id="stars"></div>
+    <div class="overlay" aria-hidden="true"></div>
+
+    <div class="glass" id="glass">
+      <header>
+        <div class="logo">M</div>
+        <div>
+          <h1>para la más migajera de ecuador</h1>
+          <div class="subtitle">un detalle digital — toca abrir carta</div>
+        </div>
+        <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+          <button id="musicToggle" class="btn" title="pausar/reanudar música">🎵</button>
+        </div>
+      </header>
+
+      <div id="screen-loading" class="screen">
+        <div style="font-weight:800;font-size:16px">cargando estrellas<span id="dots">...</span></div>
+      </div>
+
+      <div id="screen-cat" class="screen" style="display:none">
+        <div class="cat-wrap" aria-hidden="true">
+          <svg class="cat-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Renata">
+            <g id="catHead" class="cat-head" transform="translate(0,0)">
+              <circle cx="100" cy="95" r="58" fill="#0b0b0b"/>
+              <path d="M54 50 q18 -28 38 -14 q-17 -6 -38 14" fill="#0b0b0b"/>
+              <path d="M146 50 q-18 -28 -38 -14 q17 -6 38 14" fill="#0b0b0b"/>
+              <ellipse cx="78" cy="86" rx="12" ry="8" fill="#6b3d28"/>
+              <ellipse cx="122" cy="78" rx="10" ry="6" fill="#6b3d28"/>
+              <g id="eyesGroup">
+                <ellipse class="eye" cx="82" cy="96" rx="8" ry="12" fill="#fff"/>
+                <ellipse class="eye" cx="118" cy="96" rx="8" ry="12" fill="#fff"/>
+                <circle cx="82" cy="98" r="3" fill="#000"/>
+                <circle cx="118" cy="98" r="3" fill="#000"/>
+              </g>
+              <circle cx="100" cy="112" r="3" fill="#ffb3b3"/>
+              <path d="M95 118 q5 6 10 0" stroke="#ffb3b3" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+        <button id="openLetter" class="btn">abrir carta 💌</button>
+      </div>
+
+      <div id="screen-letter" class="screen" style="display:none">
+        <div class="card">
+          <div class="letter" id="letterArea"></div>
+          <div class="controls">
+            <button id="viewGift" class="btn">ver regalo 🎁</button>
+            <button id="backToCat" class="ghost">volver</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="screen-gift" class="screen" style="display:none">
+        <div class="card" style="text-align:center">
+          <div style="font-weight:900;font-size:16px;color:var(--neon)">✨ tu regalo prometido ✨</div>
+          <div style="color:var(--muted);margin-top:6px">Ingresa tus datos reales en el archivo antes de compartir si lo deseas</div>
+          <div class="creds" style="margin-top:12px">
+            <div>
+              <div style="font-size:12px;color:var(--muted)">Usuario / Email</div>
+              <div id="userField" class="field">(tu correo aquí)</div>
+            </div>
+            <div>
+              <div style="font-size:12px;color:var(--muted)">Contraseña</div>
+              <div id="passField" class="field">(tu contraseña aquí)</div>
+            </div>
+          </div>
+          <div class="controls" style="margin-top:16px">
+            <button id="copyCreds" class="btn">copiar credenciales</button>
+            <button id="openSpotify" class="ghost">abrir spotify</button>
+            <button id="backToLetter" class="ghost">volver</button>
+          </div>
+        </div>
+        <div class="final" id="finalMsg">gracias x existir 🐥</div>
+      </div>
+
+    </div>
+  </div>
+
+  <audio id="piano" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_3d4d0c2f7d.mp3?filename=soft-piano-113567.mp3"></audio>
+  <audio id="ding" preload="auto" src="https://actions.google.com/sounds/v1/ui/click_short.ogg"></audio>
+  <audio id="whoosh" preload="auto" src="https://actions.google.com/sounds/v1/foley/soft_whoosh.ogg"></audio>
+
+<script>
+// create stars
+const stars = document.getElementById('stars');
+for(let i=0;i<20;i++){
+  const s = document.createElement('div');
+  s.className='star';
+  s.style.left = (5 + Math.random()*90) + '%';
+  s.style.top = (5 + Math.random()*90) + '%';
+  s.style.animationDelay = (Math.random()*6) + 's';
+  s.style.width = (2 + Math.random()*6) + 'px';
+  s.style.height = s.style.width;
+  stars.appendChild(s);
+}
+
+const screenLoading = document.getElementById('screen-loading');
+const screenCat = document.getElementById('screen-cat');
+const screenLetter = document.getElementById('screen-letter');
+const screenGift = document.getElementById('screen-gift');
+const openLetter = document.getElementById('openLetter');
+const viewGift = document.getElementById('viewGift');
+const backToCat = document.getElementById('backToCat');
+const backToLetter = document.getElementById('backToLetter');
+const piano = document.getElementById('piano');
+const ding = document.getElementById('ding');
+const whoosh = document.getElementById('whoosh');
+const musicToggle = document.getElementById('musicToggle');
+const letterArea = document.getElementById('letterArea');
+const finalMsg = document.getElementById('finalMsg');
+const userField = document.getElementById('userField');
+const passField = document.getElementById('passField');
+
+const letterText = `hey Dayanna, hola
+
+espero que hayas tenido un cumpleaños increíble, que lo hayas disfrutado y, claro, que la hayas pasado muy bien.
+
+prometí regalarte una cuenta de spotify… y lo prometido es deuda.
+no quería enviártela de una forma tan simple, con un mensaje y ya; así que decidí hacerlo de esta manera, para que al menos tuviera un toque diferente jajaja.
+
+la distancia no importa: este detallito viaja por internet, no por paquetería.
+
+promesa cumplida.
+espero que lo disfrutes mucho.
+
+cuidese, migajerota, tk y no se le olvide tomar agüita 🐈‍⬛`;
+
+// loader
+let dots=0;
+const dotsEl = document.getElementById('dots');
+let loader = setInterval(()=>{ dots = (dots+1)%4; dotsEl.textContent='.'.repeat(dots); },400);
+setTimeout(()=>{ clearInterval(loader); screenLoading.style.display='none'; screenCat.style.display='flex'; },1400);
+
+// open letter
+openLetter.addEventListener('click', ()=>{
+  ding.currentTime = 0; try{ ding.play(); }catch(e){}
+  screenCat.style.display='none';
+  screenLetter.style.display='flex';
+  setTimeout(()=>{ piano.volume=0.6; piano.play().catch(()=>{}); musicToggle.textContent='⏸︎'; },220);
+  typeWriter(letterText, letterArea, 0, ()=>{});
+});
+
+backToCat.addEventListener('click', ()=>{
+  screenLetter.style.display='none';
+  screenCat.style.display='flex';
+  piano.pause();
+  musicToggle.textContent='🎵';
+  letterArea.innerHTML='';
+});
+
+viewGift.addEventListener('click', ()=>{
+  whoosh.currentTime = 0; try{ whoosh.play(); }catch(e){}
+  screenLetter.style.display='none';
+  screenGift.style.display='flex';
+  setTimeout(()=> finalMsg.classList.add('show'), 500);
+});
+
+backToLetter.addEventListener('click', ()=>{
+  screenGift.style.display='none';
+  screenLetter.style.display='flex';
+  finalMsg.classList.remove('show');
+});
+
+let playing=true;
+musicToggle.addEventListener('click', ()=>{
+  if(playing){ piano.pause(); musicToggle.textContent='🎵'; playing=false; } else { piano.play().catch(()=>{}); musicToggle.textContent='⏸︎'; playing=true; }
+});
+
+function typeWriter(text, target, i, cb){
+  if(i < text.length){
+    target.innerHTML += text.charAt(i)=='\n'?'<br>':text.charAt(i);
+    target.parentNode.scrollIntoView({behavior:'smooth', block:'center'});
+    setTimeout(()=> typeWriter(text, target, i+1, cb), 28);
+  } else { if(cb) cb(); }
+}
+
+document.getElementById('copyCreds').addEventListener('click', async ()=>{
+  try{
+    await navigator.clipboard.writeText(`Usuario: ${userField.textContent}\nContraseña: ${passField.textContent}`);
+    const b = document.getElementById('copyCreds');
+    b.textContent='copiado ✅'; setTimeout(()=> b.textContent='copiar credenciales',1500);
+  }catch(e){}
+});
+
+document.getElementById('openSpotify').addEventListener('click', ()=> window.open('https://open.spotify.com','_blank'));
+
+document.addEventListener('keydown',(e)=>{ if(e.key==='Enter' && screenCat.style.display!=='none'){ openLetter.click(); } });
+
+</script>
+</body>
+</html>
